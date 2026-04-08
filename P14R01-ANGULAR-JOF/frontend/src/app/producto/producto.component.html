@@ -1,0 +1,125 @@
+<div class="products-page">
+  <div class="page-header">
+    <div>
+      <h1>Product Management</h1>
+      <p>Manage your products with create, update, delete, and search actions.</p>
+    </div>
+    <!-- <button class="btn btn-primary">+ New Product</button> -->
+  </div>
+
+
+  <div class="content-grid">
+    <div class="form-card">
+      <h2>Add Product</h2>
+
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" placeholder="Enter product name" [(ngModel)]="productName" />
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+        <input type="number" placeholder="Enter price" [(ngModel)]="price" />
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="selectedCategory">
+          @for (item of categories; track $index;) {
+          <option>{{item.nombre}}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Stock</label>
+        <input type="number" placeholder="Enter stock quantity" [(ngModel)]="stock" />
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" (click)="onClear()">Clear</button>
+        <button class="btn btn-primary" (click)="onSaveProduct()">Save Product</button>
+      </div>
+    </div>
+
+    <!-- <div class="toolbar">
+      <div class="search-box">
+        <input type="text" placeholder="Search product by name..." [(ngModel)]="searchText" (ngModelChange)="onSearch($event)"/>
+      </div>
+    </div> -->
+
+    <div class="table-card">
+      <div class="table-header">
+        <h2>Products List</h2>
+        <span class="badge">{{productos.length}}</span>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Categoria</th>
+              <th class="actions-column">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of productos; track $index;) {
+
+            <tr>
+              <td>{{item.nombre}}</td>
+              <td>{{item.precio}}</td>
+              <td>{{item.stock}}</td>
+              <td>{{item.categoria}}</td>
+              <td class="actions">
+                <button class="btn-action edit" (click)="onOpenModal(item)">Edit</button>
+                <button class="btn-action delete" (click)="onDelete(item)">Delete</button>
+              </td>
+            </tr>
+            }
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+@if (isOpenModal) {
+  <div class="modal-backdrop" (click)="onCloseModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Edit product</h2>
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" placeholder="Enter product name" [(ngModel)]="editingProduct.nombre" />
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+        <input type="number" placeholder="Enter price" [(ngModel)]="editingProduct.precio" />
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="editingProduct.categoria">
+          @for (item of categories; track $index;) {
+            <option>{{item.nombre}}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Stock</label>
+        <input type="number" placeholder="Enter stock quantity" [(ngModel)]="editingProduct.stock" />
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" (click)="onCloseModal()">Cancel</button>
+        <button class="btn btn-primary" (click)="onSaveModal()">Update product</button>
+      </div>
+    </div>
+  </div>
+}
