@@ -1,0 +1,53 @@
+USE TiendaDB;
+GO
+
+CREATE LOGIN Juan WITH PASSWORD = '12345';
+
+CREATE USER [Juan] FOR LOGIN [Juan] WITH DEFAULT_SCHEMA=[dbo]
+GO
+
+ALTER ROLE [db_owner] ADD MEMBER [Juan]
+GO
+
+
+--CREATE USER [ELIAN] FOR LOGIN [ELIAN] WITH DEFAULT_SCHEMA=[dbo]
+--GO
+
+--CREATE USER [Oziel] FOR LOGIN [LoginTienda] WITH DEFAULT_SCHEMA=[dbo]
+--GO
+
+--CREATE USER [usuario_angular] FOR LOGIN [usuario_angular] WITH DEFAULT_SCHEMA=[dbo]
+--GO
+
+--ALTER ROLE [db_owner] ADD MEMBER [ELIAN]
+--GO
+
+--ALTER ROLE [db_owner] ADD MEMBER [Oziel]
+--GO
+
+--ALTER ROLE [db_datareader] ADD MEMBER [Oziel]
+--GO
+
+--ALTER ROLE [db_datawriter] ADD MEMBER [Oziel]
+--GO
+
+CREATE TABLE Categorias (
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	Nombre VARCHAR(250) NOT NULL,
+	Descripcion VARCHAR(250) NOT NULL
+)
+
+CREATE TABLE Productos(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	Nombre VARCHAR(250) NOT NULL,
+	Precio DECIMAL(10,2) NOT NULL,
+	Stock INT NOT NULL,
+	CategoriasId INT NULL
+)
+
+
+ALTER TABLE Productos
+WITH CHECK ADD FOREIGN KEY(CategoriasId)
+REFERENCES Categorias (Id)
+
+
